@@ -55,22 +55,26 @@ def generate_launch_description():
             default_value='false', 
             description='Use simulation (Gazebo) clock if true'),
 
+        # IncludeLaunchDescription(
+        #     PythonLaunchDescriptionSource([nav2_launch_file_dir, '/nav2_bringup_1st_launch.py']),
+        #     launch_arguments={'map': map_dir, 'use_sim_time': use_sim_time}.items(),
+        # ),
+
+        # IncludeLaunchDescription(
+        #     PythonLaunchDescriptionSource([nav2_launch_file_dir, '/nav2_bringup_2nd_launch.py']),
+        #     launch_arguments={'use_sim_time': use_sim_time, 'params': param_dir}.items(),
+        # ),
         IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([nav2_launch_file_dir, '/nav2_bringup_1st_launch.py']),
+            PythonLaunchDescriptionSource([nav2_launch_file_dir, '/nav2_bringup_launch.py']),
             launch_arguments={'map': map_dir, 'use_sim_time': use_sim_time}.items(),
         ),
 
-        IncludeLaunchDescription(
-            PythonLaunchDescriptionSource([nav2_launch_file_dir, '/nav2_bringup_2nd_launch.py']),
-            launch_arguments={'use_sim_time': use_sim_time, 'params': param_dir}.items(),
-        ),
-
-        Node(
-            package='rviz2',
-            node_executable='rviz2',
-            node_name='rviz2',
-            arguments=['-d', rviz_config_dir],
-            output='screen'),
+        # Node(
+        #     package='rviz2',
+        #     node_executable='rviz2',
+        #     node_name='rviz2',
+        #     arguments=['-d', rviz_config_dir],
+        #     output='screen'),
 
         ExecuteProcess(
             cmd=['ros2', 'param', 'set', '/world_model', 'use_sim_time', use_sim_time],
