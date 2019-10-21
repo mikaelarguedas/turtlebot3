@@ -19,6 +19,7 @@ import os
 from ament_index_python.packages import get_package_share_directory
 from launch import LaunchDescription
 from launch.actions import DeclareLaunchArgument
+from launch.actions import ExecuteProcess
 from launch.actions import IncludeLaunchDescription
 from launch.launch_description_sources import PythonLaunchDescriptionSource
 from launch.substitutions import LaunchConfiguration
@@ -74,11 +75,16 @@ def generate_launch_description():
                 'params': param_dir}.items(),
         ),
 
-        Node(
-            package='rviz2',
-            node_executable='rviz2',
-            node_name='rviz2',
-            arguments=['-d', rviz_config_dir],
-            parameters=[{'use_sim_time': use_sim_time}],
+        # Node(
+        #     package='rviz2',
+        #     node_executable='rviz2',
+        #     node_name='rviz2',
+        #     arguments=['-d', rviz_config_dir],
+        #     parameters=[{'use_sim_time': use_sim_time}],
+        #     output='screen'),
+        ExecuteProcess(cmd=[
+                'rviz2',
+                '--display-config', rviz_config_dir,
+            ],
             output='screen'),
     ])
